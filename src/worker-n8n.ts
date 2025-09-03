@@ -3,9 +3,10 @@
  * This version allows n8n to connect without authentication for MCP protocol
  */
 
+import "./types/cloudflare-workers";
 import { ApolloTools } from './apollo-tools-worker';
 
-export interface Env {
+export interface WorkerEnv extends Env {
   APOLLO_API_KEY: string;
   SESSIONS: KVNamespace;
   NODE_ENV: string;
@@ -147,7 +148,7 @@ async function handleMcpRequest(request: Request, env: Env): Promise<Response> {
         
         // Store session in KV if not exists
         if (!sessionId) {
-          await env.SESSIONS.put(newSessionId, JSON.stringify({
+          await env.SESSIONS!.put(newSessionId, JSON.stringify({
             created: new Date().toISOString(),
             protocolVersion: body.params?.protocolVersion || '1.0.0',
             clientInfo: body.params?.clientInfo || {},
@@ -165,8 +166,8 @@ async function handleMcpRequest(request: Request, env: Env): Promise<Response> {
               version: env.MCP_VERSION || '1.0.0',
             },
             capabilities: {
-              tools: true,
-              logging: true,
+              tools: {},
+              logging: {},
             },
             sessionId: newSessionId,
           },
@@ -265,7 +266,7 @@ async function handleHealth(): Promise<Response> {
 export default {
   async fetch(
     request: Request,
-    env: Env,
+    env: WorkerEnv,
     ctx: ExecutionContext
   ): Promise<Response> {
     const url = new URL(request.url);
@@ -301,9 +302,9 @@ export default {
           const newRequest = new Request(request.url.replace('/mcp/initialize', '/mcp'), {
             method: 'POST',
             headers: request.headers,
-            body: JSON.stringify({ ...body, method: 'initialize' }),
+            body: JSON.stringify({ ...(body as any), method: 'initialize' }),
           });
-          return handleMcpRequest(newRequest, env);
+          return handleMcpRequest(newRequest, env as any);
         }
         break;
         
@@ -313,9 +314,9 @@ export default {
           const newRequest = new Request(request.url.replace('/mcp/tools/list', '/mcp'), {
             method: 'POST',
             headers: request.headers,
-            body: JSON.stringify({ ...body, method: 'tools/list' }),
+            body: JSON.stringify({ ...(body as any), method: 'tools/list' }),
           });
-          return handleMcpRequest(newRequest, env);
+          return handleMcpRequest(newRequest, env as any);
         }
         break;
         
@@ -325,9 +326,9 @@ export default {
           const newRequest = new Request(request.url.replace('/mcp/tools/call', '/mcp'), {
             method: 'POST',
             headers: request.headers,
-            body: JSON.stringify({ ...body, method: 'tools/call' }),
+            body: JSON.stringify({ ...(body as any), method: 'tools/call' }),
           });
-          return handleMcpRequest(newRequest, env);
+          return handleMcpRequest(newRequest, env as any);
         }
         break;
     }
