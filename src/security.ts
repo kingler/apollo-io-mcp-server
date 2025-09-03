@@ -180,7 +180,7 @@ class RateLimiter {
           method: req.method
         });
 
-        return res.status(429).json({
+        res.status(429).json({
           jsonrpc: '2.0',
           error: {
             code: -32000,
@@ -194,6 +194,7 @@ class RateLimiter {
           },
           id: null
         });
+        return;
       }
 
       // Add current request
@@ -239,7 +240,7 @@ export function validateInput(req: Request, res: Response, next: NextFunction): 
       path: req.path
     });
 
-    return res.status(413).json({
+    res.status(413).json({
       jsonrpc: '2.0',
       error: {
         code: -32000,
@@ -252,6 +253,7 @@ export function validateInput(req: Request, res: Response, next: NextFunction): 
       },
       id: null
     });
+    return;
   }
 
   // Check content type for POST requests
@@ -263,7 +265,7 @@ export function validateInput(req: Request, res: Response, next: NextFunction): 
       path: req.path
     });
 
-    return res.status(400).json({
+    res.status(400).json({
       jsonrpc: '2.0',
       error: {
         code: -32000,
@@ -275,6 +277,7 @@ export function validateInput(req: Request, res: Response, next: NextFunction): 
       },
       id: null
     });
+    return;
   }
 
   next();
