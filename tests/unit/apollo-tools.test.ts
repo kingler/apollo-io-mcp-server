@@ -434,6 +434,406 @@ describe('Apollo.io MCP Tools', () => {
     });
   });
 
+  // Additional tests for missing functions to improve coverage
+  describe('updateContact tool', () => {
+    test('updates existing contact', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-contact',
+          arguments: {
+            contactId: 'contact123',
+            title: 'Senior Manager',
+            company: 'Updated Corp'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('updated successfully');
+    });
+  });
+
+  describe('searchContacts tool', () => {
+    test('searches existing contacts', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'search-contacts',
+          arguments: {
+            query: 'manager',
+            company: 'JetVision'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Found');
+    });
+  });
+
+  describe('searchNews tool', () => {
+    test('searches for news articles', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'search-news',
+          arguments: {
+            query: 'aviation',
+            industry: 'Aviation'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Found');
+    });
+  });
+
+  describe('searchJobPostings tool', () => {
+    test('searches job postings', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'search-job-postings',
+          arguments: {
+            domain: 'jetvision.com',
+            jobTitles: ['Engineer']
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Found');
+    });
+  });
+
+  describe('createDeal tool', () => {
+    test('creates new deal', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'create-deal',
+          arguments: {
+            name: 'JetVision Partnership',
+            value: 50000,
+            stage: 'Qualification'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Deal created');
+    });
+  });
+
+  describe('updateDeal tool', () => {
+    test('updates existing deal', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-deal',
+          arguments: {
+            dealId: 'deal123',
+            value: 75000,
+            stage: 'Proposal'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('updated successfully');
+    });
+  });
+
+  describe('searchSequences tool', () => {
+    test('searches email sequences', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'search-sequences',
+          arguments: {
+            query: 'outreach',
+            status: 'active'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Found');
+    });
+  });
+
+  describe('searchTasks tool', () => {
+    test('searches tasks', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'search-tasks',
+          arguments: {
+            status: 'pending',
+            priority: 'High'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('Found');
+    });
+  });
+
+  describe('updateSequence tool', () => {
+    test('updates email sequence', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-sequence',
+          arguments: {
+            sequenceId: 'seq123',
+            name: 'Updated Outreach',
+            status: 'paused'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('updated successfully');
+    });
+  });
+
+  describe('getSequenceStats tool', () => {
+    test('gets sequence statistics', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'get-sequence-stats',
+          arguments: {
+            sequenceId: 'seq123'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('statistics');
+    });
+  });
+
+  describe('addContactsToSequence tool', () => {
+    test('adds contacts to sequence', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'add-contacts-to-sequence',
+          arguments: {
+            sequenceId: 'seq123',
+            contactIds: ['contact1', 'contact2']
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('added');
+    });
+  });
+
+  describe('removeContactsFromSequence tool', () => {
+    test('removes contacts from sequence', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'remove-contacts-from-sequence',
+          arguments: {
+            sequenceId: 'seq123',
+            contactIds: ['contact1']
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('removed');
+    });
+  });
+
+  describe('updateTask tool', () => {
+    test('updates existing task', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-task',
+          arguments: {
+            taskId: 'task123',
+            title: 'Updated Task',
+            priority: 'Low'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('updated successfully');
+    });
+  });
+
+  describe('completeTask tool', () => {
+    test('marks task as completed', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'complete-task',
+          arguments: {
+            taskId: 'task123',
+            completionNotes: 'Task completed successfully'
+          }
+        }
+      };
+
+      const result = await apolloTools.handleToolCall(request);
+      expect(result.content[0].text).toContain('completed');
+    });
+
+    test('validates required taskId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'complete-task',
+          arguments: {}
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Task ID is required');
+    });
+  });
+
+  // Test validation errors for various tools
+  describe('validation errors', () => {
+    test('updateContact requires contactId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-contact',
+          arguments: { title: 'Manager' }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Contact ID is required');
+    });
+
+    test('updateDeal requires dealId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-deal',
+          arguments: { value: 1000 }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Deal ID is required');
+    });
+
+    test('updateSequence requires sequenceId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-sequence',
+          arguments: { name: 'Test' }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Sequence ID is required');
+    });
+
+    test('getSequenceStats requires sequenceId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'get-sequence-stats',
+          arguments: {}
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Sequence ID is required');
+    });
+
+    test('addContactsToSequence requires sequenceId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'add-contacts-to-sequence',
+          arguments: { contactIds: ['c1'] }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Sequence ID is required');
+    });
+
+    test('addContactsToSequence requires contacts', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'add-contacts-to-sequence',
+          arguments: { sequenceId: 'seq1' }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Either contactIds or emails must be provided');
+    });
+
+    test('removeContactsFromSequence requires sequenceId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'remove-contacts-from-sequence',
+          arguments: { contactIds: ['c1'] }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Sequence ID is required');
+    });
+
+    test('removeContactsFromSequence requires contactIds', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'remove-contacts-from-sequence',
+          arguments: { sequenceId: 'seq1' }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Contact IDs are required');
+    });
+
+    test('updateTask requires taskId', async () => {
+      const request: CallToolRequest = {
+        method: 'tools/call',
+        params: {
+          name: 'update-task',
+          arguments: { title: 'Test' }
+        }
+      };
+
+      await expect(apolloTools.handleToolCall(request))
+        .rejects
+        .toThrow('Task ID is required');
+    });
+  });
+
   describe('error handling', () => {
     test('handles unknown tool names', async () => {
       const request: CallToolRequest = {

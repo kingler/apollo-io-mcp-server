@@ -18,5 +18,5 @@
   - Endpoint:
   https://apollo-mcp.kingler.workers.dev/mcp
   - Authentication: Bearer token with value Bearer 
-  bj015A7ynPgcjjhrQ_fN_Q
+  YOUR_APOLLO_API_KEY_HERE
   - Transport: httpStreamable or http

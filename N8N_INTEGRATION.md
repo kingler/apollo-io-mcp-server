@@ -15,7 +15,7 @@ The Apollo.io MCP server is deployed on Cloudflare Workers at:
 3. **Authentication**: 
    - Method: `API Key` or `Bearer Token`
    - Header Name: `Authorization`
-   - Header Value: `Bearer bj015A7ynPgcjjhrQ_fN_Q` (format: Bearer YOUR_APOLLO_API_KEY)
+   - Header Value: `Bearer YOUR_APOLLO_API_KEY_HERE` (format: Bearer YOUR_APOLLO_API_KEY)
    - Alternative: Use `X-API-Key` header with just the API key value
 
 ### Complete n8n Node Configuration
@@ -29,7 +29,7 @@ The Apollo.io MCP server is deployed on Cloudflare Workers at:
         "serverTransport": "httpStreamable",
         "authentication": {
           "type": "apiKey",
-          "apiKey": "bj015A7ynPgcjjhrQ_fN_Q"
+          "apiKey": "YOUR_APOLLO_API_KEY_HERE"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
@@ -55,6 +55,7 @@ The Apollo.io MCP server provides the following tools:
 ## Authentication
 
 The server requires authentication via API key. The API key must be:
+
 1. Your valid Apollo.io API key
 2. Sent in the request headers as either:
    - `Authorization: Bearer YOUR_API_KEY`
@@ -64,11 +65,13 @@ The server requires authentication via API key. The API key must be:
 ## Testing the Connection
 
 ### 1. Test Health Endpoint
+
 ```bash
 curl -X GET https://apollo-mcp.kingler.workers.dev/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "healthy",
@@ -78,10 +81,11 @@ Expected response:
 ```
 
 ### 2. Test MCP Initialize
+
 ```bash
 curl -X POST https://apollo-mcp.kingler.workers.dev/mcp \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer bj015A7ynPgcjjhrQ_fN_Q" \
+  -H "Authorization: Bearer YOUR_APOLLO_API_KEY_HERE" \
   -d '{
     "jsonrpc": "2.0",
     "method": "initialize",
@@ -97,10 +101,11 @@ curl -X POST https://apollo-mcp.kingler.workers.dev/mcp \
 ```
 
 ### 3. Test Tools List
+
 ```bash
 curl -X POST https://apollo-mcp.kingler.workers.dev/mcp \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer bj015A7ynPgcjjhrQ_fN_Q" \
+  -H "Authorization: Bearer YOUR_APOLLO_API_KEY_HERE" \
   -d '{
     "jsonrpc": "2.0",
     "method": "tools/list",
@@ -130,11 +135,13 @@ curl -X POST https://apollo-mcp.kingler.workers.dev/mcp \
 ### Debug Mode
 
 To enable debug logging, you can test with the staging environment:
+
 - Staging URL: `https://apollo-mcp-staging.kingler.workers.dev/mcp`
 
 ## Support
 
 For issues or questions:
+
 1. Check the server logs: `npx wrangler tail apollo-mcp --env production`
 2. Review the health endpoint: `https://apollo-mcp.kingler.workers.dev/health`
 3. Verify API key permissions in Apollo.io dashboard
