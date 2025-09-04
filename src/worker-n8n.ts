@@ -160,7 +160,7 @@ async function handleMcpRequest(request: Request, env: Env): Promise<Response> {
         return new Response(JSON.stringify({
           jsonrpc: '2.0',
           result: {
-            protocolVersion: '1.0.0',
+            protocolVersion: '2024-11-05',
             serverInfo: {
               name: 'apollo-io-mcp-server',
               version: env.MCP_VERSION || '1.0.0',
